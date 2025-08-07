@@ -4,7 +4,7 @@ import os
 
 def send_email(tym_now=''):
     msg = EmailMessage()
-    msg["Subject"] = "Daily BUBU DUDU Notification"
+    msg["Subject"] = "Daily Notification"
     msg["From"] = os.getenv("EMAIL_ADDRESS")
     msg["To"] = os.getenv("RECIPIENTS")  # comma-separated list
     msg.set_content(f"This is your daily {tym_now} notification")
