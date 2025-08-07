@@ -1,1 +1,29 @@
+name: Daily Email Notification
 
+on:
+  schedule:
+    - cron: '30 11 * * *'  # 5 PM IST == 11:30 AM UTC
+  workflow_dispatch:       # Allow manual trigger
+
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install secure-smtplib
+
+      - name: Send Email
+        env:
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          RECIPIENTS: ${{ secrets.RECIPIENTS }}
+        run: python send_email.py
